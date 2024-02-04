@@ -1,0 +1,4 @@
+.card-img-top-custom {
+    overflow: hidden;
+    aspect-ratio: 3 / 2; 
+  }

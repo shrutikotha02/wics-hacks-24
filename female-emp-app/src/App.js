@@ -14,7 +14,7 @@ const App = () => {
     <Router>
       <div>
         {/* Bootstrap Navbar */}
-        <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar bg="dark" variant="dark" expand="lg" rounded="true">
           <Navbar.Brand as={Link} to="/menstrual-tracking">Menstrual Tracking</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

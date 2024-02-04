@@ -3,6 +3,8 @@ import { Row, Container, Form, Button, Card, Col, Modal } from 'react-bootstrap'
 
 import axios from 'axios';
 
+
+
 const MenstrualCycleComponent = () => {
   const [j2, setJ2] = useState([]);
   const [jcl, setJcl] = useState([]);
@@ -10,10 +12,15 @@ const MenstrualCycleComponent = () => {
   const [phase, setPhase] = useState('');
   const [hall, setHall] = useState('');
   const [matchingPhrases, setMatchingPhrases] = useState([]);
+  const [selectedFoodNames, setSelectedFoodNames] = useState([]);
+
   const [day, setDay] = useState(); // Change the default day as needed
   const [month, setMonth] = useState(2); // Make sure to set the month as needed
 
-
+  const handleInputChangeFood = () => {
+    const foodNames = getFoodNames(hall);
+    setSelectedFoodNames(foodNames);
+  };
   const handleInputChange = (event) => {
     setPhase(event.target.value);
   };
@@ -23,17 +30,6 @@ const MenstrualCycleComponent = () => {
     setHall('J2')
   };
 
-  const handleInputChangeFood = () => {
-    setMatchingPhrases([...matchingPhrases], [ "BBQ Grilled Today",
-    "Gluten-Free Penne Pasta",
-    "Yogurt Vanilla",
-    "Housemade Turkey",
-    "Housmade Spanish Rice",
-    "Shredded Romaine",
-    "Fresh Tomato Slices",
-    "Chilled Brown Rice",
-    "Chicken Breast Strips"]);
-  };
 
   
 
@@ -83,6 +79,8 @@ const MenstrualCycleComponent = () => {
     fetchData();
   }, [day, month]);
 
+  
+
   const calculateScore = (list, diningHall) => {
     let matchingPhrases = [];
     let score = 0;
@@ -131,7 +129,9 @@ const MenstrualCycleComponent = () => {
         }
       }
     }
+    console.log(matchingPhrases)
     return matchingPhrases;
+    
   };
 
   const menstrualList = ["fruit", "berry", "pepper", "broccoli", "chicken", "lentils", "bean", "cheese", "egg", "salmon", "nuts", "beef", "blueberry"];
@@ -179,18 +179,93 @@ const MenstrualCycleComponent = () => {
     if (idx === 0) {
       selectedHall = 'j2';
     } else if (idx === 1) {
-      selectedHall = 'jcl';
+      selectedHall = 'JCL';
     } else {
-      selectedHall = 'kins';
+      selectedHall = 'Kinsolving';
     }
 
     setHall(selectedHall);
     setMatchingPhrases(printFoods(phase, selectedHall));
   };
 
+
+  const getFoodNames = (hall) => {
+    switch (hall) {
+      case 'j2':
+        return [
+          "BBQ Grilled Today",
+          "Gluten-Free Penne Pasta",
+          "Yogurt Vanilla",
+          "Housemade Turkey",
+          "Housmade Spanish Rice",
+          "Shredded Romaine",
+          "Fresh Tomato Slices",
+          "Chilled Brown Rice",
+          "Chicken Breast Strips"
+        ];
+      case 'JCL':
+        // Define food names for JCL
+        return [
+          // Add food names for JCL
+          "BBQ Grilled Today",
+          "Gluten-Free Penne Pasta",
+          "Yogurt Vanilla",
+          "Housemade Turkey",
+          "Housmade Spanish Rice",
+          "Shredded Romaine",
+          "Fresh Tomato Slices",
+          "Chilled Brown Rice",
+          "Chicken Breast Strips"
+        ];
+      case 'Kinsolving':
+        // Define food names for Kinsolving
+        return [
+          // Add food names for Kinsolving
+          "BBQ Grilled Today",
+          "Gluten-Free Penne Pasta",
+          "Yogurt Vanilla",
+          "Housemade Turkey",
+          "Housmade Spanish Rice",
+          "Shredded Romaine",
+          "Fresh Tomato Slices",
+          "Chilled Brown Rice",
+          "Chicken Breast Strips"
+        ];
+      default:
+        return ["BBQ Grilled Today",
+        "Gluten-Free Penne Pasta",
+        "Yogurt Vanilla",
+        "Housemade Turkey",
+        "Housmade Spanish Rice",
+        "Shredded Romaine",
+        "Fresh Tomato Slices",
+        "Chilled Brown Rice",
+        "Chicken Breast Strips"];
+    }
+  };
+
+
+  const DiningHallCard = ({ name, image, description }) => {
+    return (
+      <Col md={4} className="mb-4">
+        <Card>
+          <div className="card-img-top-custom">
+            <Card.Img variant="top" src={image} alt={`${name} Image`} />
+          </div>
+          <Card.Body>
+            <Card.Title>{name}</Card.Title>
+            <Card.Text>{description}</Card.Text>
+            <a href="https://hf-foodpro.austin.utexas.edu/foodpro/location.aspx" className="btn btn-primary">Explore Menu</a>
+          </Card.Body>
+        </Card>
+      </Col>
+    );
+  };
+
   useEffect(() => {
     calculateScoresAndPrint();
   }, [j2, jcl, kins, phase]);
+
 
   return (
     <div>
@@ -225,19 +300,73 @@ const MenstrualCycleComponent = () => {
         </Col>
       </Row>
       <Row>
+      <Row>
       <Button variant="primary" onClick={handleInputChangeFood}>
             Get Healthy Food options
           </Button>
       </Row>
+      </Row>
+      
       <p>Based on your menstrual cycle, you are currently on day {day} in the {phase} phase of your period.</p>
       <p>We identified several foods that are beneficial to you in this stage of your menstrual cycle.</p>
       <p>These foods can be found at the following dining hall: {hall}.</p>
-      <p>Look for the following options at {hall}!</p>
+      <p>Look for the following options:</p>
       <ul>
+
+      <div className="container mt-4 text-center">
+      <div className="card custom-card">
+        <div className="card-body">
+          <h5 className="card-title font-weight-bold">{hall}</h5>
+        </div>
+      </div>
+    </div>
+     
+        
+      <div className="container mt-4">
+      </div>
         {matchingPhrases.map((food, index) => (
           <li key={index}>{food}</li>
         ))}
       </ul>
+      <div className="container mt-4">
+        <h5>Food Options:</h5>
+        <ul>
+          {selectedFoodNames.map((food, index) => (
+            <li key={index}>{food}</li>
+          ))}
+        </ul>
+      </div>
+        
+      <Row>
+      <DiningHallCard
+        name="J2 Dining"
+        image="/j2.jpg"
+        description="Baked Potato Bar, Salad Bar, Vegan Line, Texas Grill, Pizza, Breakfasts, Desserts 
+        Monday - Thursday:	7:00 a.m. - 9:00 p.m
+        Friday:	7:00 a.m.   -   8:00 p.m
+        Saturday - Sunday:	9:00 a.m. - 2:00 p.m., 4:30 p.m. - 8:00 p.m."
+   
+      />
+
+      <DiningHallCard
+        name="JCL"
+        image="/jcl.jpg"
+        description="Wok, Comfort Line, Vegan Line, Deli, Grill, Salad Bar, Soups/Breads, Fresh Fruit
+        Monday - Thursday:	10:30 a.m. - 9:00 p.m.	
+        Friday:	10:30 a.m. - 3:00 p.m.	
+        Saturday - Sunday:		Closed"
+      />
+
+      <DiningHallCard
+        name="Kinsolving"
+        image="/kins.jpg"
+        description="Chef's features, plant-powered, Grill Line, Soup, Bakery, Yogurt Bar, Salad Bar, Pizza
+Monday - Thursday:	7:00 a.m. - 9:00 p.m.	
+Friday:	7:00 a.m. - 8:00 p.m.	
+Saturday - Sunday:	9:00 a.m. - 2:00 p.m., 4:30 p.m. - 8:00 p.m"
+      />
+      </Row>
+  
 
     </div>
   );
