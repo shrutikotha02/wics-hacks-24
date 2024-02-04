@@ -13,12 +13,11 @@ const App = () => {
   return (
     <Router>
       <div>
-        {/* Bootstrap Navbar */}
         <Navbar
           variant="dark"
           expand="lg"
           rounded="true"
-          style={{ backgroundColor: '#ff1493' }}  // Dark pink background color
+          style={{ backgroundColor: '#ff1493' }}  
         >
           <Navbar.Brand as={Link} to="/menstrual-tracking">CycleChic</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -32,7 +31,6 @@ const App = () => {
           </Navbar.Collapse>
         </Navbar>
 
-        {/* Route Content */}
         <Routes>
         <Route path="/food-recommendations" element={<FoodRecommendations />} />
         <Route path="/fitness-recommendations" element={<FitnessRecommendations />} />

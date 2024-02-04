@@ -13,11 +13,10 @@ const MenstrualTracking = () => {
 
   const handlePrediction = () => {
     try {
-      // Convert averagePeriodLength to a number
       const averagePeriodLengthValue = parseFloat(averagePeriodLength);
 
       if (isNaN(averagePeriodLengthValue) || averagePeriodLengthValue <= 0) {
-        throw new Error('Please enter a valid average period length.');
+        throw new Error('enter valid average period length.');
       }
 
       const currentDate = new Date();
@@ -28,7 +27,7 @@ const MenstrualTracking = () => {
       setError(null);
     } catch (error) {
       console.error(error);
-      setError('Failed to fetch prediction');
+      setError('Failed fetch prediction');
       setPrediction(null);
     }
   };
