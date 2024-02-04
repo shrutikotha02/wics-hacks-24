@@ -28,7 +28,6 @@ const FoodRecommendations = () => {
   };
 
   const handleSetCycleStage = () => {
-    // Optionally, you can perform any additional logic before setting the cycle stage
     console.log(`Setting cycle stage: ${cycleStage}`);
   };
 
@@ -72,12 +71,13 @@ const FoodRecommendations = () => {
   };
 
   const handleCardClick = async (recipe) => {
-    // Fetch detailed information for the selected recipe, including instructions and steps
-    const apiKey = 'f60565dbe3624a22b2d8aaaf8d2004e9';
+
+    const apiKey = 'e366db87124641e587b7346a699ef373';
   
     try {
       const response = await fetch(
         `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${apiKey}`
+      
       );
   
       if (response.ok) {
@@ -102,7 +102,6 @@ const FoodRecommendations = () => {
     <Container className="mt-3">
       <h2>Food Recommendations</h2>
       <>Enter ingredients in your pantry for convenient recipes or enter your cycle phase (from main page) in for nutritious meals!</> 
-
       <> 
       <li>phase 1 = Menstrual phase</li>
       <li>phase 2 = Follicular phase</li>

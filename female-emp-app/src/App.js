@@ -14,8 +14,13 @@ const App = () => {
     <Router>
       <div>
         {/* Bootstrap Navbar */}
-        <Navbar bg="dark" variant="dark" expand="lg" rounded="true">
-          <Navbar.Brand as={Link} to="/menstrual-tracking">Menstrual Tracking</Navbar.Brand>
+        <Navbar
+          variant="dark"
+          expand="lg"
+          rounded="true"
+          style={{ backgroundColor: '#ff1493' }}  // Dark pink background color
+        >
+          <Navbar.Brand as={Link} to="/menstrual-tracking">CycleChic</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">

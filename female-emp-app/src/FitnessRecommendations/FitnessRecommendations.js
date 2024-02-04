@@ -14,13 +14,9 @@ const MenstrualCycleComponent = () => {
   const [matchingPhrases, setMatchingPhrases] = useState([]);
   const [selectedFoodNames, setSelectedFoodNames] = useState([]);
 
-  const [day, setDay] = useState(); // Change the default day as needed
-  const [month, setMonth] = useState(2); // Make sure to set the month as needed
+  const [day, setDay] = useState(); 
+  const [month, setMonth] = useState(2); 
 
-  const handleInputChangeFood = () => {
-    const foodNames = getFoodNames(hall);
-    setSelectedFoodNames(foodNames);
-  };
   const handleInputChange = (event) => {
     setPhase(event.target.value);
   };
@@ -60,7 +56,6 @@ const MenstrualCycleComponent = () => {
           setKins(Array.from(kinsFoodItems).map(item => item.textContent));
         }
 
-        // Assign stage based on day of cycle
         if (day >= 0 && day <= 7) {
           setPhase('menstrual');
         } else if (day <= 13) {
@@ -94,6 +89,7 @@ const MenstrualCycleComponent = () => {
         }
       }
     }
+
 
     return score;
   };
@@ -189,60 +185,6 @@ const MenstrualCycleComponent = () => {
   };
 
 
-  const getFoodNames = (hall) => {
-    switch (hall) {
-      case 'j2':
-        return [
-          "BBQ Grilled Today",
-          "Gluten-Free Penne Pasta",
-          "Yogurt Vanilla",
-          "Housemade Turkey",
-          "Housmade Spanish Rice",
-          "Shredded Romaine",
-          "Fresh Tomato Slices",
-          "Chilled Brown Rice",
-          "Chicken Breast Strips"
-        ];
-      case 'JCL':
-        // Define food names for JCL
-        return [
-          // Add food names for JCL
-          "BBQ Grilled Today",
-          "Gluten-Free Penne Pasta",
-          "Yogurt Vanilla",
-          "Housemade Turkey",
-          "Housmade Spanish Rice",
-          "Shredded Romaine",
-          "Fresh Tomato Slices",
-          "Chilled Brown Rice",
-          "Chicken Breast Strips"
-        ];
-      case 'Kinsolving':
-        // Define food names for Kinsolving
-        return [
-          // Add food names for Kinsolving
-          "BBQ Grilled Today",
-          "Gluten-Free Penne Pasta",
-          "Yogurt Vanilla",
-          "Housemade Turkey",
-          "Housmade Spanish Rice",
-          "Shredded Romaine",
-          "Fresh Tomato Slices",
-          "Chilled Brown Rice",
-          "Chicken Breast Strips"
-        ];
-      default:
-        return ["BBQ Grilled Today",
-        "Gluten-Free Penne Pasta",
-        "Yogurt Vanilla",
-        "Housemade Turkey",
-        "Housmade Spanish Rice",
-        "Shredded Romaine",
-        "Fresh Tomato Slices",
-        "Chilled Brown Rice",
-        "Chicken Breast Strips"];
-    }
-  };
 
 
   const DiningHallCard = ({ name, image, description }) => {
@@ -301,7 +243,7 @@ const MenstrualCycleComponent = () => {
       </Row>
       <Row>
       <Row>
-      <Button variant="primary" onClick={handleInputChangeFood}>
+      <Button variant="primary" onClick={handleInputChangeDay}>
             Get Healthy Food options
           </Button>
       </Row>

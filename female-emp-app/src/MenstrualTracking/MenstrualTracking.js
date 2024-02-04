@@ -27,7 +27,7 @@ const MenstrualTracking = () => {
       setPrediction(prediction);
       setError(null);
     } catch (error) {
-      console.error(error); // Log the error details
+      console.error(error);
       setError('Failed to fetch prediction');
       setPrediction(null);
     }
@@ -36,13 +36,10 @@ const MenstrualTracking = () => {
   const predictMenstrualCycle = (lastPeriodDate, currentDay, averageCycleLength, averagePeriodLength) => {
     const lastPeriod = new Date(lastPeriodDate);
 
-    // Calculate the days since the start of the last period, excluding the current day
-    const daysSinceLastPeriodStart = Math.floor((new Date() - lastPeriod) / (24 * 60 * 60 * 1000));
+    const daysSinceLastPeriodStart = Math.floor((new Date() - lastPeriod) / (24 * 60 * 60 * 1000)) - 1;
 
-    // Calculate the day within the current cycle
-    const dayOfCycle = (daysSinceLastPeriodStart % averageCycleLength) + 1; // Add 1 to make it 1-based
+    const dayOfCycle = (daysSinceLastPeriodStart % averageCycleLength) + 1; 
 
-    // Determine the menstrual cycle phase
     let phase;
     if (dayOfCycle <= 7) {
       phase = 'Menstrual phase';
@@ -54,8 +51,6 @@ const MenstrualTracking = () => {
       phase = 'Luteal phase';
     }
 
-    // If the current day is within the average period length from the last period start date,
-    // the user is still on their period
     if (dayOfCycle <= averagePeriodLength) {
       return {
         onPeriod: true,
@@ -64,13 +59,10 @@ const MenstrualTracking = () => {
       };
     }
 
-    // Calculate the days remaining in the current cycle after the period
     const daysRemainingInCycle = averageCycleLength - dayOfCycle;
 
-    // Calculate the next period start date based on the average cycle length
     const nextPeriodStartDate = new Date(lastPeriod.getTime() + ((daysRemainingInCycle + averagePeriodLength) * 24 * 60 * 60 * 1000));
 
-    // Calculate the predicted cycle length in days
     const predictedCycleLength = averageCycleLength;
 
     return {
@@ -78,7 +70,7 @@ const MenstrualTracking = () => {
       dayOfCycle,
       phase,
       predictedCycleLength,
-      nextPeriodStartDate: nextPeriodStartDate.toISOString().split('T')[0], // Format as 'YYYY-MM-DD'
+      nextPeriodStartDate: nextPeriodStartDate.toISOString().split('T')[0], 
     };
   };
 
