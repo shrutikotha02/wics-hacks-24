@@ -9,6 +9,7 @@ const FoodRecommendations = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const [cycleStage, setCycleStage] = useState('');
 
 
 
@@ -21,14 +22,43 @@ const FoodRecommendations = () => {
     setNewIngredient('');
   };
 
+  const handleInputChangeStage = (e) => {
+    setCycleStage(e.target.value);
+    console.log(cycleStage);
+  };
+
+  const handleSetCycleStage = () => {
+    // Optionally, you can perform any additional logic before setting the cycle stage
+    console.log(`Setting cycle stage: ${cycleStage}`);
+  };
+
   const handleGetRecipes = async () => {
-    const apiKey = 'f60565dbe3624a22b2d8aaaf8d2004e9';
+    const apiKey = '';
     const ingredientList = ingredients.join(',');
 
     try {
+
+      var apiUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientList}&apiKey=${apiKey}`;
+      console.log(apiUrl)
+      if (cycleStage == '1') {
+        var ingredientsList = 'salmon,sardine,anchovies,trout,tuna,chia,edamame,spinach,almonds,cashew,quinoa,broccoli';
+        apiUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsList}&apiKey=${apiKey}`;
+      } else if (cycleStage == '2') {
+        const antiInflammatoryIngredients = 'turmeric,ginger,blueberries,leafy greens,fish,apple'; 
+        apiUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${antiInflammatoryIngredients}&apiKey=${apiKey}`;
+      } else if (cycleStage == '3') {
+        const healthySweetIngredients = 'berries,bananas,dark chocolate,almonds,honey,apples,pears,grapes,kiwi,mango'; 
+        apiUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${healthySweetIngredients}&apiKey=${apiKey}`;
+      } else if (cycleStage == '4') {
+        const nutrients = 'salmon,mackerel,sardine,herring,anchovies,trout,tuna,chia,edamame,spinach,kale,almonds,cashew,quinoa,oats,broccoli'; 
+        apiUrl = `https://api.spoonacular.com/recipes/findByIngredients/findByIngredients?apiKey=${apiKey}&ingredients=${nutrients}`;
+      }
+      
+
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientList}&apiKey=${apiKey}`
+       apiUrl
       );
+  
 
       if (response.ok) {
         const data = await response.json();
@@ -71,6 +101,15 @@ const FoodRecommendations = () => {
   return (
     <Container className="mt-3">
       <h2>Food Recommendations</h2>
+      <>Enter ingredients in your pantry for convenient recipes or enter your cycle phase (from main page) in for nutritious meals!</> 
+
+      <> 
+      <li>phase 1 = Menstrual phase</li>
+      <li>phase 2 = Follicular phase</li>
+      <li> phase 3 = Ovulation phase </li>
+      <li> phase 4 = Luteal phase </li>
+      <p></p>
+      </>
 
       <Row className="mb-2">
         <Col>
@@ -84,6 +123,19 @@ const FoodRecommendations = () => {
         <Col>
           <Button variant="primary" onClick={handleAddIngredient}>
             Add
+          </Button>
+        </Col>
+        <Col>
+          <Form.Control
+            type="number"
+            placeholder="Enter cycle phase"
+            value={cycleStage}
+            onChange={handleInputChangeStage}
+          />
+        </Col>
+        <Col>
+          <Button variant="primary" onClick={handleSetCycleStage}>
+            Set Cycle Stage
           </Button>
         </Col>
         <Col>

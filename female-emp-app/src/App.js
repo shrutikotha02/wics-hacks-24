@@ -1,38 +1,43 @@
 // client/src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import FitnessRecommendations from './FitnessRecommendations/FitnessRecommendations';
+import { BrowserRouter as Router, Route, Link, Switch, Routes } from 'react-router-dom';
 import FoodRecommendations from './FoodRecommendations/FoodRecommendations';
 import MenstrualTracking from './MenstrualTracking/MenstrualTracking';
+import FitnessRecommendations from './FitnessRecommendations/FitnessRecommendations';
+import { Navbar, Nav } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
-function App() {
+
+const App = () => {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/fitness">Fitness Recommendations</Link>
-            </li>
-            <li>
-              <Link to="/food">Food Recommendations</Link>
-            </li>
-            <li>
-              <Link to="/menstrual">Menstrual Tracking</Link>
-            </li>
-          </ul>
-        </nav>
+        {/* Bootstrap Navbar */}
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Navbar.Brand as={Link} to="/menstrual-tracking">Menstrual Tracking</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link as={Link} to="/food-recommendations">Recipe Recommendations</Nav.Link>
+              <Nav.Link as={Link} to="/fitness-recommendations">Dining Hall Recommendations</Nav.Link>
+              <Nav.Link as={Link} to="/menstrual-tracking">Menstrual Tracking</Nav.Link>
 
-        <hr />
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
+        {/* Route Content */}
         <Routes>
-          <Route path="/fitness" element={<FitnessRecommendations />} />
-          <Route path="/food" element={<FoodRecommendations />} />
-          <Route path="/menstrual" element={<MenstrualTracking />} />
-        </Routes>
+        <Route path="/food-recommendations" element={<FoodRecommendations />} />
+        <Route path="/fitness-recommendations" element={<FitnessRecommendations />} />
+        <Route path="/menstrual-tracking" element={<MenstrualTracking />} />
+
+        <Route path="/" element={<FoodRecommendations />} />
+      </Routes>
       </div>
     </Router>
   );
-}
+};
 
 export default App;
